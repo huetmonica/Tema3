@@ -1,8 +1,11 @@
 package BL;
 
 import Models.Spectacol;
+import UI.LoginForm;
 import DL.SpectacolDAO;
 import java.util.ArrayList;
+
+import javax.swing.JFrame;
 
 public class SpectacolManager {
 	private String titlu;
@@ -12,8 +15,7 @@ public class SpectacolManager {
 	private String nrb;
 	private int nr;
 
-	public SpectacolManager(String titlu, String regia, String distributia,
-			String data, String nrb) {
+	public SpectacolManager(String titlu, String regia, String distributia, String data, String nrb) {
 		this.titlu = titlu;
 		this.regia = regia;
 		this.distributia = distributia;
@@ -34,5 +36,14 @@ public class SpectacolManager {
 		SpectacolDAO spec = new SpectacolDAO();
 		list = spec.getSpectacol();
 		return list;
+	}
+
+	public void ExportaSpectacole(String option) {
+
+		ExportFactory ef = new ExportFactory();
+		String opt = option;
+		Export exp = ef.exporta(opt);
+		exp.export();
+
 	}
 }

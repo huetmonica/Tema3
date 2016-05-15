@@ -3,17 +3,19 @@ package BL;
 import DL.UserBd;
 import Models.Angajat;
 import java.util.Random;
+
 public class UserService {
 
 	public String user;
 	public String name;
 	public String pass;
-    public String cnp;
+	public String cnp;
+
 	public UserService(String name, String user, String pass, String cnp) {
 		this.user = user;
 		this.name = name;
 		this.pass = pass;
-		this.cnp= cnp;
+		this.cnp = cnp;
 	}
 
 	public int Verific() throws Exception {
@@ -42,26 +44,25 @@ public class UserService {
 		UserBd ubd = new UserBd();
 		MD5Digest md = new MD5Digest();
 		parola = md.Criptare(pass);
-		Angajat ang = new Angajat(name, user, parola,cnp);
+		Angajat ang = new Angajat(name, user, parola, cnp);
 		ubd.addUser(ang);
 	}
-	
-  public String Reseteaza() throws Exception{
-	  String parola = "";
-	  String parol="";
-	  int valid=-1;
+
+	public String Reseteaza() throws Exception {
+		String parola = "";
+		String parol = "";
+		int valid = -1;
 		UserBd ubd = new UserBd();
 		MD5Digest md = new MD5Digest();
 		Random rand = new Random();
-		valid=ubd.VerificaCnp(name, user, cnp);
-		if (valid==1)
-		{
-        int  n = rand.nextInt(10000) + 1;
-	    parola= String.valueOf(n);
-	    parol = md.Criptare("parola");
-	 //   Angajat ang=new Angajat (name,user,parol,cnp);
-	    ubd.UpdateUser(name, parol);
-	    }
-	  return parola;
-  }
+		valid = ubd.VerificaCnp(name, user, cnp);
+		if (valid == 1) {
+			int n = rand.nextInt(10000) + 1;
+			parola = String.valueOf(n);
+			parol = md.Criptare("parola");
+			
+			ubd.UpdateUser(name, parol);
+		}
+		return parola;
+	}
 }

@@ -69,8 +69,10 @@ public class LoginForm extends JFrame {
 	private JButton Creeaza = new JButton("Creeaza");
 	private JButton Viz = new JButton("Vizualizare");
 	private JButton Ad = new JButton("Adauga");
+	private JButton ex = new JButton("Exporta");
 	private JButton Resetare = new JButton("Resetare parola");
 	private JComboBox<String> comboBox = new JComboBox<String>();
+	private JComboBox<String> comboBox1 = new JComboBox<String>();
 	private JList<Object> lista;
 	private DefaultListModel<Object> listModel;
 
@@ -107,8 +109,7 @@ public class LoginForm extends JFrame {
 		par.setBounds(10, 80, 120, 10);
 		login.add(par);
 
-		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {
-				"admin", "angajat" }));
+		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] { "admin", "angajat" }));
 		comboBox.setBounds(90, 70, 100, 30);
 		login.add(comboBox);
 
@@ -144,14 +145,13 @@ public class LoginForm extends JFrame {
 					String par = parolap.getText();
 
 					// apelez in bl userservice
-					UserService us = new UserService(num, selectedChoice, par,
-							"");
+					UserService us = new UserService(num, selectedChoice, par, "");
 					valid = us.Verific();
 					if (valid == 1) {
 						LoginForm inter = new LoginForm();
 						inter.setVisible(true);
 						inter.AngajatForm();
-						
+
 					}
 					if (valid == 0) {
 						LoginForm inter = new LoginForm();
@@ -174,10 +174,9 @@ public class LoginForm extends JFrame {
 					String num = numep.getText();
 					String par = parolap.getText();
 					String cnp = cp.getText();
-					
+
 					// cond ma loghez nu imi cere parola
-					UserService us = new UserService(num, selectedChoice, "",
-							cnp);
+					UserService us = new UserService(num, selectedChoice, "", cnp);
 					parola = us.Reseteaza();
 					resetp.setText(parola);
 
@@ -378,8 +377,7 @@ public class LoginForm extends JFrame {
 					String distributia = distributiap.getText();
 					String data = datap.getText();
 					String nrbilete = nrbiletep.getText();
-					SpectacolManager spm = new SpectacolManager(titlu, regia,
-							distributia, data, nrbilete);
+					SpectacolManager spm = new SpectacolManager(titlu, regia, distributia, data, nrbilete);
 					spm.Adauga();
 					// apelez in bl Spectacolmanager
 				} catch (Exception exc) {
@@ -392,8 +390,7 @@ public class LoginForm extends JFrame {
 				try {
 
 					// apelez in bl Spectacolmanager pentru vizualizare
-					SpectacolManager spm = new SpectacolManager("", "", "", "",
-							"");
+					SpectacolManager spm = new SpectacolManager("", "", "", "", "");
 					ArrayList list = new ArrayList();
 					list = spm.getSpectacole();
 					listModel.clear();
@@ -419,6 +416,16 @@ public class LoginForm extends JFrame {
 					UserService us = new UserService(numa, usera, par, cnp);
 					us.Ceeaza();
 
+				} catch (Exception exc) {
+				}
+			}
+		});
+		ex.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					String selectedChoice = (String) comboBox.getSelectedItem();
+					SpectacolManager sp = new SpectacolManager("", "", "", "", "");
+					sp.ExportaSpectacole(selectedChoice);
 				} catch (Exception exc) {
 				}
 			}
